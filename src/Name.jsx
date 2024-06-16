@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import 'tailwindcss/tailwind.css'; // Ensure you have Tailwind CSS installed and imported
+import 'tailwindcss/tailwind.css'; 
+import Swal from 'sweetalert2';
 
 const Name = () => {
     const [name, setName] = useState('');
@@ -26,7 +27,12 @@ const Name = () => {
         }
 
         localStorage.setItem('name', name);
-        alert('Name saved successfully!');
+        Swal.fire({
+            icon: 'success',
+            title: 'Saved',
+            text: 'Your name has been successfully!.',
+          });
+        
         setIsNameStored(true); 
     };
 

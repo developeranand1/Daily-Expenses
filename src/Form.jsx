@@ -98,6 +98,13 @@ const Form = () => {
   };
 
 
+  const calculateTotalPrice=() => {
+    return people.reduce((total, item) => {
+      return total + parseFloat(item.price || 0);
+    }, 0).toFixed(2)
+  };
+
+
   return (
     <div className="flex flex-col items-center justify-center px-2 sm:px-6 lg:px-8">
       <div className="overflow-x-auto w-full">
@@ -138,7 +145,9 @@ const Form = () => {
                       <FiEdit />
                     </button>
                   </td>
+                  
                 </tr>
+               
               ))
             ) : (
               <tr>
@@ -146,9 +155,15 @@ const Form = () => {
                   No Daily Expenses Data Available
                 </td>
               </tr>
+             
             )}
           </tbody>
+          
         </table>
+        <div className=" mt-4">
+            <strong>Total Expenses : ₹ {calculateTotalPrice()}</strong>
+          </div>
+
       </div>
       <div className="w-full max-w-xs mt-8">
         <form
