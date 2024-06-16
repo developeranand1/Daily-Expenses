@@ -42,6 +42,7 @@ const Name = () => {
                 <div className='px-2'>
                     <h3 className='font-bold py-2'>Hey, 🙋‍♂️</h3>
                     <h1 className="text-2xl font-bold flex" > <img src="/user.png" alt="" style={{paddingRight:"10px"}} />{name} </h1>
+                    
                 </div>
             ) : (
                 <div className="max-w-md mx-auto">

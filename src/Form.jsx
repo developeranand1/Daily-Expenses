@@ -150,15 +150,7 @@ const Form = () => {
   return (
     <>
     <div className="flex flex-col items-center justify-center px-2 sm:px-6 lg:px-8">
-    {totalPrice > 0 && (
-          <button
-            onClick={downloadPDF}
-            className="download flex items-center text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 mt-2"
-          >
-            <FiDownload className="mr-2" />
-            <span>Invoice</span>
-          </button>
-        )}
+    
       <div className="overflow-x-auto w-full">
         <table className="table-auto w-full">
           <thead>
@@ -212,8 +204,21 @@ const Form = () => {
           </tbody>
           
         </table>
-        <div className=" mt-4">
-            <strong>Total Expenses : ₹ {calculateTotalPrice()}</strong>
+        <div className=" mt-4 w-full flex justify-between items-center">
+        <strong>Total Expenses : ₹ {calculateTotalPrice()}</strong>
+            {totalPrice > 0 && (
+          
+           
+            <button
+              onClick={downloadPDF}
+              className="download flex items-center text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 mt-2"
+            >
+              
+              <FiDownload className="mr-2" />
+              <span>Invoice</span>
+            </button>
+         
+        )}
           </div>
 
       </div>
