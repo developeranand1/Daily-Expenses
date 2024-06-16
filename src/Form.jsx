@@ -2,6 +2,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import Swal from 'sweetalert2';
+import jsPDF from "jspdf";
+import { FiDownload } from "react-icons/fi";
+import "jspdf-autotable";
+
+
 
 const Form = () => {
   const formData = {
@@ -12,6 +17,8 @@ const Form = () => {
   const [person, setPerson] = useState(formData);
   const [isEditing, setIsEditing] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(null);
+  const [totalPrice, setTotalPrice]=useState(0);
+
   const [people, setPeople] = useState(() => {
     const saveData = localStorage.getItem("peoples");
     return saveData ? JSON.parse(saveData) : [];
@@ -19,6 +26,7 @@ const Form = () => {
 
   useEffect(() => {
     localStorage.setItem("peoples", JSON.stringify(people));
+    setTotalPrice(calculateTotalPrice());
   }, [people]);
 
   const handleInputChange = (e) => {
@@ -105,8 +113,52 @@ const Form = () => {
   };
 
 
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    const userName=localStorage.getItem("name") || "User"
+
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(20,184,166); 
+   
+
+    doc.text(`Daily Expenses for ${userName}`, doc.internal.pageSize.getWidth() / 2, 16, { align: "center" });
+
+    const tableColumn =["Sr.No.","Product Name", "Price", "Date"];
+    const tableRows=[];
+    people.forEach((person,index) => {
+      const personData=[
+        index +1,
+        person.product,
+       `${ person.price}`,
+        person.date,
+      ];
+      tableRows.push(personData);
+    });
+
+    doc.autoTable(tableColumn, tableRows,{startY:20}),
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0); // Black colo
+
+    doc.text(`Total Expenses :  ${calculateTotalPrice()}`,14,  doc.autoTable.previous.finalY +10);
+    doc.save("expenses.pdf");
+  };
+
+
   return (
+    <>
     <div className="flex flex-col items-center justify-center px-2 sm:px-6 lg:px-8">
+    {totalPrice > 0 && (
+          <button
+            onClick={downloadPDF}
+            className="download flex items-center text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 mt-2"
+          >
+            <FiDownload className="mr-2" />
+            <span>Invoice</span>
+          </button>
+        )}
       <div className="overflow-x-auto w-full">
         <table className="table-auto w-full">
           <thead>
@@ -231,6 +283,7 @@ const Form = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

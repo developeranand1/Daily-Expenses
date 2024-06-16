@@ -1,0 +1,13 @@
+ .download{
+    position: absolute;
+    top: 83px;
+}
+
+@media screen and (min-width:400px) {
+   .download{
+        position: absolute;
+        right: 36px;
+        top: 54px;
+        margin: 1px 0px;
+    }
+}
