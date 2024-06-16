@@ -29,77 +29,77 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isEditing) {
-        const updatePeople = people.map((p, index) =>
-            index === currentIndex ? person : p
-        );
-        setPeople(updatePeople);
-        setIsEditing(false);
-        setCurrentIndex(null);
-        Swal.fire({
-            icon: 'success',
-            title: 'Updated!',
-            text: 'Your entry has been updated.',
-        });
+      const updatePeople = people.map((p, index) =>
+        index === currentIndex ? person : p
+      );
+      setPeople(updatePeople);
+      setIsEditing(false);
+      setCurrentIndex(null);
+      Swal.fire({
+        icon: 'success',
+        title: 'Updated!',
+        text: 'Your entry has been updated.',
+      });
     } else {
-        setPeople([...people, person]);
-        Swal.fire({
-            icon: 'success',
-            title: 'Saved!',
-            text: 'Your entry has been saved.',
-        });
+      setPeople([...people, person]);
+      Swal.fire({
+        icon: 'success',
+        title: 'Saved!',
+        text: 'Your entry has been saved.',
+      });
     }
     setPerson(formData);
-};
+  };
 
-const handleRemove = (index) => {
+  const handleRemove = (index) => {
     Swal.fire({
-        title: 'Are you sure?',
-        text: 'You will not be able to recover this entry!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, keep it'
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this entry!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
     }).then((result) => {
-        if (result.isConfirmed) {
-            const updateData = people.filter((_, i) => i !== index);
-            setPeople(updateData);
-            Swal.fire({
-                icon: 'success',
-                title: 'Deleted!',
-                text: 'Your entry has been deleted.',
-            });
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            Swal.fire(
-                'Cancelled',
-                'Your entry is safe :)',
-                'error'
-            );
-        }
+      if (result.isConfirmed) {
+        const updateData = people.filter((_, i) => i !== index);
+        setPeople(updateData);
+        Swal.fire({
+          icon: 'success',
+          title: 'Deleted!',
+          text: 'Your entry has been deleted.',
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your entry is safe :)',
+          'error'
+        );
+      }
     });
-};
+  };
 
-const handleEdit = (index) => {
+  const handleEdit = (index) => {
     // Show confirmation dialog
     Swal.fire({
-        title: 'Are you sure?',
-        text: 'Do you want to edit this entry?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, edit it!',
-        cancelButtonText: 'No, cancel'
+      title: 'Are you sure?',
+      text: 'Do you want to edit this entry?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, edit it!',
+      cancelButtonText: 'No, cancel'
     }).then((result) => {
-        // If user confirms, proceed with edit
-        if (result.isConfirmed) {
-            setPerson(people[index]);
-            setIsEditing(true);
-            setCurrentIndex(index);
-        }
+      // If user confirms, proceed with edit
+      if (result.isConfirmed) {
+        setPerson(people[index]);
+        setIsEditing(true);
+        setCurrentIndex(index);
+      }
     });
-};
+  };
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col items-center justify-center px-2 sm:px-6 lg:px-8">
       <div className="overflow-x-auto w-full">
         <table className="table-auto w-full">
           <thead>
@@ -115,7 +115,7 @@ const handleEdit = (index) => {
             {people.length > 0 ? (
               people.map((item, index) => (
                 <tr key={index} className="text-center">
-                  <td className="border px-4 py-2">{index+1}</td>
+                  <td className="border px-4 py-2">{index + 1}</td>
                   <td className="border px-4 py-2">{item.product}</td>
                   <td className="border px-4 py-2">{item.price}</td>
                   <td className="border px-4 py-2">{item.date}</td>
@@ -206,10 +206,10 @@ const handleEdit = (index) => {
             />
           </div>
           <div className="flex items-center justify-between text-center">
-            <button 
+            <button
               type="submit"
-              className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-             
+              className="text-white w-full bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 mt-2">
+
               {isEditing ? "Update" : "Save"}
             </button>
           </div>
